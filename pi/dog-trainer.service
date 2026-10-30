@@ -1,0 +1,32 @@
+[Unit]
+Description=Dog Trainer CC1101 radio dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+SupplementaryGroups=spi gpio
+WorkingDirectory=/opt/dog-trainer
+ExecStart=/usr/bin/python3 -u /opt/dog-trainer/app.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=RADIO_STATE_DIR=/var/lib/dog-trainer
+Environment=RADIO_PORT=8780
+StateDirectory=dog-trainer
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=8
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+MemoryMax=160M
+TasksMax=40
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
